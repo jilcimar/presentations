@@ -69,24 +69,43 @@
 				<section>
 					<section>
 						<h2>Como configurar o Laravel?</h2>
-						<figure>
-
-						</figure>
 					</section>
 					<section>
-						<h2></h2>
+						<h2>Precisamos apenas de 1 script no terminal</h2>
 					</section>
 
 					<!-- Passo a passo para a configuração do Laravel -->
 					<section>
-						<h2>PASSO A PASSO - SETUP</h2>
+						<h2>SETUP (LARAVEL)</h2>
 						<div class="row">
+							<ul style="text-align: -webkit-left;font-size: 30px;">
+								<li>sudo apt-add-repository ppa:ondrej/php</li>
+								<li>sudo apt-get update</li>
+								<li>sudo apt-get install php-mbstring</li>
+								<li>sudo apt-get install composer -y</li>
+								<li>sudo apt-get install php7.0-pgsql -y</li>
+								<li>sudo apt-get install apache2 libapache2-mod-php7.0 -y</li>
+								<li>sudo apt-get install php7.0-dev -y</li>
+								<li>sudo apt-get install php7.0-zip -y</li>
+								<li>sudo apt-get install php7.0-xml -y</li>
+								<li>sudo apt-get install php7.0-mbstring -y</li>
+								<li>sudo apt-get install php7.0-cgi -y</li>
+								<li>sudo apt-get install php7.0-curl -y</li>
+								<li>sudo apt-get install php7.0-zip</li>
+ 							</ul>
 						</div>
+					</section>
+
+					<!-- Configurando o banco de dados -->
+					<section>
+						<h2>SETUP (BANCO DE DADOS)</h2>
 						<div class="row">
-							<div class="col-md-3"></div>
-							<div class="col-md-3"><img class="img-fl" src="img/f-beautifulsoup.png"></div>
-							<div class="col-md-3"><img class="img-fl" src="img/f-selenium.png"></div>
-							<div class="col-md-3"></div>
+							<ul style="text-align: -webkit-left;font-size: 30px;">
+								<li>sudo apt-get install postgresql pgadmin3</li>
+								<li>sudo su postgres</li>
+								<li>psql</li>
+								<li>ALTER USER postgres WITH PASSWORD ‘pgadmin’;</li>
+							</ul>
 						</div>
 					</section>
 				</section>
