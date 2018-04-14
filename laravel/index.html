@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Introdução ao Laravel</title>
+
+		<meta name="description" content="Apresentation about web scraping with Selenium and Beautiful Soup">
+		<meta name="author" content="Jilcimar Fernandes">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css" id="theme">
+		<link rel="stylesheet" href="css/custom.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<!-- Início -->
+				<section data-background="img/bg-main.jpg" id="main-section">
+					<h1>Primeiros passos com o Laravel</h1>
+					<h4>Desenvolvendo uma aplicação web utilizando o Laravel 5.5</h4>
+					<p>
+						<small><a href="https://jilcimar.github.io">Jilcimar da Silva Fernandes</a> / <a href="http://twitter.com/jilcimarfer">@jilcimarfer</a></small>
+					</p>
+					<a href=""><img id="logo-evento" src="img/logo.png" /></a>
+				</section>
+				<!-- Sumário -->
+				<section>
+					<h2>Roteiro de apresentação</h2>
+					<ol>
+						<li>
+							Instalar e configurar o Laravel
+						</li>
+						<li>
+							Estrutura do framework
+						</li>
+						<li>
+							Sistema de Login
+						</li>
+						<li>
+							Implementando um CRUD
+						</li>
+					</ol>
+				</section>
+				<!-- 1 parte -->
+				<section>
+					<section>
+						<h2>Como configurar o Laravel?</h2>
+						<figure>
+
+						</figure>
+					</section>
+					<section>
+						<h2></h2>
+					</section>
+
+					<!-- Passo a passo para a configuração do Laravel -->
+					<section>
+						<h2>PASSO A PASSO - SETUP</h2>
+						<div class="row">
+						</div>
+						<div class="row">
+							<div class="col-md-3"></div>
+							<div class="col-md-3"><img class="img-fl" src="img/f-beautifulsoup.png"></div>
+							<div class="col-md-3"><img class="img-fl" src="img/f-selenium.png"></div>
+							<div class="col-md-3"></div>
+						</div>
+					</section>
+				</section>
+
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+		<script src="js/custom.js"></script>
+
+		<script>
+
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true }
+				],
+				pdfMaxPagesPerSlide: 1
+			});
+
+		</script>
+
+	</body>
+</html>
