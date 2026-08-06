@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Skills no Claude Code</title>
+  <style>
+    :root{
+      --bg:#070A12; --panel:#0F1628; --panel2:#111B33; --text:#F7FAFF; --muted:#AEB9CC;
+      --brand:#7C5CFF; --brand2:#36D6D6; --accent:#FFB86B; --danger:#FF6B8A; --ok:#74E39A;
+      --line:rgba(255,255,255,.14); --shadow:0 28px 70px rgba(0,0,0,.45);
+    }
+    *{box-sizing:border-box} html,body{height:100%; margin:0; background:var(--bg); color:var(--text); font-family:Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; overflow:hidden;}
+    body:before{content:""; position:fixed; inset:-15%; background:radial-gradient(circle at 15% 15%, rgba(124,92,255,.32), transparent 28%), radial-gradient(circle at 85% 20%, rgba(54,214,214,.22), transparent 30%), radial-gradient(circle at 50% 100%, rgba(255,184,107,.15), transparent 34%); filter:blur(6px); z-index:0;}
+    .deck{position:relative; z-index:1; height:100%; width:100%;}
+    .slide{display:none; position:absolute; inset:0; padding:66px 82px 58px; overflow:hidden;}
+    .slide.active{display:block; animation:fade .22s ease-out;}
+    @keyframes fade{from{opacity:0; transform:translateY(8px)}to{opacity:1; transform:none}}
+    .slide:after{content:""; position:absolute; left:82px; right:82px; bottom:38px; height:1px; background:linear-gradient(90deg, transparent, rgba(255,255,255,.22), transparent);}
+    h1,h2,h3,p{margin:0} h1{font-size:64px; line-height:.98; letter-spacing:-2.6px; max-width:980px;} h2{font-size:46px; line-height:1.03; letter-spacing:-1.5px; max-width:1000px;} h3{font-size:25px; letter-spacing:-.5px; margin-bottom:14px;} p{font-size:24px; line-height:1.45; color:var(--muted); max-width:980px;}
+    .eyebrow{display:inline-flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.12em; text-transform:uppercase; color:var(--brand2); font-size:14px; margin-bottom:22px;}
+    .eyebrow:before{content:""; width:36px; height:2px; background:var(--brand2); display:block;}
+    .grid2{display:grid; grid-template-columns:1fr 1fr; gap:44px; align-items:center; height:calc(100% - 70px); margin-top:36px;}
+    .grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:38px;}
+    .hero{height:100%; display:flex; flex-direction:column; justify-content:center;}
+    .hero .subtitle{font-size:27px; color:#DDE6F6; margin-top:28px; max-width:780px;}
+    .tag{display:inline-flex; align-items:center; gap:8px; padding:9px 13px; border:1px solid var(--line); border-radius:999px; color:#DDE6F6; font-size:15px; background:rgba(255,255,255,.06);}
+    .tags{display:flex; flex-wrap:wrap; gap:12px; margin-top:34px;}
+    .big-number{font-size:110px; font-weight:900; letter-spacing:-6px; line-height:.85; background:linear-gradient(135deg,var(--brand2),var(--brand)); -webkit-background-clip:text; color:transparent;}
+    .panel{background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04)); border:1px solid var(--line); border-radius:28px; padding:30px; box-shadow:var(--shadow);}
+    .panel.soft{box-shadow:none; background:rgba(255,255,255,.045)}
+    .panel p{font-size:19px; line-height:1.45}.panel strong{color:var(--text)}
+    .statement{font-size:34px; color:#FFF; line-height:1.18; letter-spacing:-.7px; max-width:1040px;}
+    .statement mark{background:linear-gradient(90deg, rgba(54,214,214,.2), rgba(124,92,255,.2)); color:#fff; border-radius:9px; padding:0 8px;}
+    .list{display:grid; gap:18px; margin-top:34px; max-width:1050px}.item{display:grid; grid-template-columns:44px 1fr; gap:18px; align-items:start}.icon{width:44px; height:44px; border-radius:14px; display:grid; place-items:center; background:rgba(54,214,214,.12); color:var(--brand2); font-weight:900; font-size:20px}.item b{font-size:23px}.item span{display:block; color:var(--muted); font-size:19px; margin-top:4px; line-height:1.35}
+    pre{margin:0; white-space:pre-wrap; font-size:18px; line-height:1.45; color:#DCE7FF; background:#070B15; border:1px solid rgba(255,255,255,.12); border-radius:22px; padding:24px; box-shadow:inset 0 0 0 1px rgba(255,255,255,.03);}
+    code{font-family:"SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;}.kw{color:#8CF1F1}.cm{color:#7E8BA5}.ok{color:var(--ok)}.warn{color:var(--accent)}.bad{color:var(--danger)}
+    .table{width:100%; border-collapse:collapse; margin-top:32px; overflow:hidden; border-radius:22px; border:1px solid var(--line); font-size:19px}.table th,.table td{text-align:left; padding:18px 20px; border-bottom:1px solid rgba(255,255,255,.10)}.table th{color:#fff; background:rgba(124,92,255,.18)}.table td{color:#D7E1F3}.table tr:last-child td{border-bottom:none}.table code{color:#A6F7F7; font-size:17px}
+    .flow{display:grid; grid-template-columns:repeat(4,1fr); gap:18px; margin-top:38px}.step{min-height:162px; padding:24px; border-radius:24px; border:1px solid var(--line); background:rgba(255,255,255,.055)}.step .n{font-size:14px; font-weight:900; color:var(--brand2); text-transform:uppercase; letter-spacing:.1em; margin-bottom:12px}.step b{font-size:24px}.step span{display:block; margin-top:10px; color:var(--muted); font-size:18px; line-height:1.35}
+    .compare{display:grid; grid-template-columns:1fr 1fr; gap:28px; margin-top:34px}.compare h3{font-size:26px}.compare ul{margin:0; padding-left:22px; color:var(--muted); font-size:20px; line-height:1.55}.compare li{margin:8px 0}.quote{font-size:34px; line-height:1.22; letter-spacing:-.8px; color:white; padding-left:28px; border-left:4px solid var(--brand2)}
+    .folder{font-size:19px; line-height:1.55}.folder .dim{color:#7C8AA6}.folder .file{color:#A7F3D0}.folder .dir{color:#A8C7FF}.folder .req{color:#FFDE8A}.mini{font-size:16px; color:#96A4BB; margin-top:16px; line-height:1.35}.source{position:absolute; right:82px; bottom:20px; color:#718099; font-size:12px}.source a{color:#8DB4FF; text-decoration:none}
+    .controls{position:fixed; z-index:5; right:22px; bottom:18px; display:flex; gap:8px; align-items:center; color:#9EABC1; font-size:13px}.btn{border:1px solid var(--line); background:rgba(255,255,255,.06); color:#DCE6F8; border-radius:12px; padding:8px 11px; cursor:pointer}.counter{min-width:54px; text-align:center}.progress{position:fixed; left:0; bottom:0; height:4px; width:0; background:linear-gradient(90deg,var(--brand2),var(--brand)); z-index:6; transition:.2s width}.notes{display:none; position:absolute; left:82px; right:82px; bottom:64px; padding:15px 18px; border-radius:18px; color:#DCE6F8; background:rgba(7,10,18,.9); border:1px solid var(--line); font-size:16px; line-height:1.35}.show-notes .notes{display:block}.muted{color:var(--muted)}.accent{color:var(--brand2)}.brand{color:var(--brand)}
+    @media print{html,body{overflow:visible;background:#fff}.slide{display:block!important; position:relative; height:100vh; page-break-after:always; background:#070A12}.controls,.progress{display:none}.notes{display:none!important}}
+  </style>
+</head>
+<body>
+  <main class="deck" id="deck">
+    <section class="slide active">
+      <div class="hero">
+        <div class="eyebrow">Claude Code • Skills</div>
+        <h1>Transformando padrões em automação reutilizável</h1>
+        <p class="subtitle">Uma visão prática sobre o que são Skills, onde instalar, como estruturar e como criar um fluxo reaproveitável para o time.</p>
+        <div class="tags"><span class="tag">SKILL.md</span><span class="tag">Global</span><span class="tag">Projeto</span><span class="tag">Repo compartilhado</span></div>
+      </div>
+      <aside class="notes">Abertura: conectar com a dor real — prompts repetidos, procedimentos manuais e padrões que queremos transformar em algo versionado.</aside>
+    </section>
+
+    <section class="slide">
+      <div class="eyebrow">A dor</div>
+      <h2>Quando o prompt vira processo, ele merece virar Skill.</h2>
+      <div class="grid2">
+        <div class="statement">Toda vez que repetimos o mesmo checklist, padrão ou passo a passo, estamos perdendo a chance de <mark>padronizar e reaproveitar</mark>.</div>
+        <div class="panel">
+          <div class="big-number">3</div>
+          <p><strong>Sinais de que vale criar uma Skill:</strong></p>
+          <div class="list">
+            <div class="item"><div class="icon">1</div><div><b>Você cola o mesmo prompt sempre</b><span>Review, documentação, deploy, criação de testes, abertura de PR.</span></div></div>
+            <div class="item"><div class="icon">2</div><div><b>O processo tem passos fixos</b><span>Entradas, validações, saída esperada e cuidados.</span></div></div>
+            <div class="item"><div class="icon">3</div><div><b>O time precisa do mesmo padrão</b><span>Menos variação e mais consistência entre projetos.</span></div></div>
+          </div>
+        </div>
+      </div>
+      <aside class="notes">Explicar que Skill não é “mais um arquivo”. Ela representa transformar conhecimento tácito em workflow reutilizável.</aside>
+    </section>
+
+    <section class="slide">
+      <div class="eyebrow">Conceito</div>
+      <h2>O que é uma Skill?</h2>
+      <div class="grid2">
+        <div>
+          <p class="quote">Uma Skill é uma pasta com um <code>SKILL.md</code> que adiciona instruções, conhecimento ou workflow ao Claude Code.</p>
+          <div class="tags"><span class="tag">Invocação manual: <code>/skill-name</code></span><span class="tag">Invocação automática via descrição</span></div>
+        </div>
+        <div class="panel soft">
+          <h3>Na prática, ela funciona como:</h3>
+          <div class="list">
+            <div class="item"><div class="icon">✓</div><div><b>Receita de execução</b><span>Passos claros para o Claude seguir.</span></div></div>
+            <div class="item"><div class="icon">✓</div><div><b>Memória versionada</b><span>Padrões do time salvos no repositório ou na máquina.</span></div></div>
+            <div class="item"><div class="icon">✓</div><div><b>Comando reutilizável</b><span>Você chama com <code>/nome-da-skill</code> quando precisar.</span></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="source">Fonte: <a href="https://docs.anthropic.com/en/docs/claude-code/skills">Claude Code Docs — Skills</a></div>
+      <aside class="notes">Ponto principal: o description é muito importante porque ajuda o Claude a decidir quando carregar automaticamente a Skill.</aside>
+    </section>
+
+    <section class="slide">
+      <div class="eyebrow">Para que servem</div>
+      <h2>Skills são boas para tarefas repetíveis e com padrão de saída.</h2>
+      <div class="grid3">
+        <div class="panel"><h3>Review de código</h3><p>Checar riscos, testes, logs, tratamento de erro, padrões do projeto e sugestões objetivas.</p></div>
+        <div class="panel"><h3>Documentação</h3><p>Gerar ADR, README, issue, changelog, runbook ou documentação técnica no formato do time.</p></div>
+        <div class="panel"><h3>Deploy / release</h3><p>Executar checklist, validar branch, rodar testes, gerar resumo e mapear riscos antes da entrega.</p></div>
+      </div>
+      <div class="compare">
+        <div class="panel soft"><h3>Use <code>CLAUDE.md</code> para</h3><ul><li>Regras gerais do projeto</li><li>Contexto de arquitetura</li><li>Padrões permanentes</li></ul></div>
+        <div class="panel soft"><h3>Use Skill para</h3><ul><li>Workflow invocável</li><li>Passo a passo repetível</li><li>Saída esperada bem definida</li></ul></div>
+      </div>
+      <div class="source">Fonte: <a href="https://docs.anthropic.com/en/docs/claude-code/skills">Claude Code Docs — Skills</a></div>
+      <aside class="notes">Comparar com CLAUDE.md: CLAUDE.md é contexto geral; Skill é procedimento com gatilho claro.</aside>
+    </section>
+
+    <section class="slide">
+      <div class="eyebrow">Estrutura</div>
+      <h2>A estrutura mínima é simples. A estrutura boa é organizada.</h2>
+      <div class="grid2">
+        <pre class="folder"><span class="dir">my-skill/</span>
+├── <span class="req">SKILL.md</span>        <span class="dim"># obrigatório</span>
+├── <span class="file">template.md</span>     <span class="dim"># modelo para preencher</span>
+├── <span class="dir">examples/</span>
+│   └── <span class="file">sample.md</span>   <span class="dim"># exemplo de saída</span>
+└── <span class="dir">scripts/</span>
+    └── <span class="file">validate.sh</span> <span class="dim"># script opcional</span></pre>
+        <div class="panel">
+          <h3>Regra prática</h3>
+          <p>Mantenha o <strong>SKILL.md</strong> focado no essencial e mova materiais grandes para arquivos de apoio.</p>
+          <div class="mini">A própria documentação recomenda referenciar os arquivos de apoio dentro do SKILL.md para o Claude saber quando carregá-los.</div>
+        </div>
+      </div>
+      <div class="source">Fonte: <a href="https://docs.anthropic.com/en/docs/claude-code/skills">Claude Code Docs — Supporting files</a></div>
+      <aside class="notes">Aqui vale mostrar que dá para começar com um arquivo só, mas evoluir para templates, exemplos e scripts.</aside>
+    </section>
+
+    <section class="slide">
+      <div class="eyebrow">SKILL.md</div>
+      <h2>O arquivo principal tem metadados + instruções.</h2>
+      <div class="grid2">
+        <pre><code><span class="kw">---</span>
+<span class="ok">name:</span> code-review
+<span class="ok">description:</span> Revise mudanças de código e aponte riscos, testes ausentes e melhorias antes de abrir PR.
+<span class="ok">disable-model-invocation:</span> false
+<span class="ok">allowed-tools:</span> Read Grep Bash
+<span class="kw">---</span>
+
+<span class="kw">## Objetivo</span>
+Revisar alterações com foco em segurança,
+qualidade, legibilidade e testes.
+
+<span class="kw">## Contexto atual</span>
+!`git diff HEAD`
+
+<span class="kw">## Saída esperada</span>
+1. Resumo das mudanças
+2. Riscos encontrados
+3. Testes recomendados</code></pre>
+        <div class="panel soft">
+          <h3>Campos úteis</h3>
+          <div class="list">
+            <div class="item"><div class="icon">D</div><div><b><code>description</code></b><span>Ajuda o Claude a decidir quando usar a Skill.</span></div></div>
+            <div class="item"><div class="icon">/</div><div><b><code>disable-model-invocation</code></b><span>Use <code>true</code> para deixar a Skill apenas manual.</span></div></div>
+            <div class="item"><div class="icon">$</div><div><b><code>$ARGUMENTS</code></b><span>Permite passar argumentos ao comando.</span></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="source">Fonte: <a href="https://docs.anthropic.com/en/docs/claude-code/skills">Claude Code Docs — Frontmatter</a></div>
+      <aside class="notes">Explicar o dynamic context injection: linhas com comando podem inserir informações atuais, como o diff do git.</aside>
+    </section>
+
+    <section class="slide">
+      <div class="eyebrow">Instalação</div>
+      <h2>Onde as Skills ficam instaladas?</h2>
+      <table class="table">
+        <thead><tr><th>Tipo</th><th>Caminho</th><th>Uso</th></tr></thead>
+        <tbody>
+          <tr><td>Global / pessoal</td><td><code>~/.claude/skills/&lt;skill-name&gt;/SKILL.md</code></td><td>Disponível em todos os projetos da máquina.</td></tr>
+          <tr><td>Projeto</td><td><code>.claude/skills/&lt;skill-name&gt;/SKILL.md</code></td><td>Disponível apenas naquele repositório.</td></tr>
+          <tr><td>Monorepo / pasta interna</td><td><code>apps/web/.claude/skills/&lt;skill-name&gt;/SKILL.md</code></td><td>Carregada quando Claude trabalha naquela área.</td></tr>
+          <tr><td>Plugin / Enterprise</td><td><code>&lt;plugin&gt;/skills/...</code> ou configuração gerenciada</td><td>Distribuição por plugin ou organização.</td></tr>
+        </tbody>
+      </table>
+      <p class="mini">Quando há conflito de nome, a precedência documentada é: Enterprise &gt; Personal &gt; Project. Skills também podem sobrescrever comandos com mesmo nome.</p>
+      <div class="source">Fonte: <a href="https://docs.anthropic.com/en/docs/claude-code/skills">Claude Code Docs — Where skills live</a></div>
+      <aside class="notes">Conectar com o repositório global do usuário: a instalação via .sh provavelmente copia ou sincroniza para ~/.claude/skills.</aside>
+    </section>
+
+    <section class="slide">
+      <div class="eyebrow">Criação</div>
+      <h2>Como criar uma Skill do zero</h2>
+      <div class="flow">
+        <div class="step"><div class="n">Passo 1</div><b>Escolha a dor</b><span>Qual prompt ou processo você repete?</span></div>
+        <div class="step"><div class="n">Passo 2</div><b>Crie a pasta</b><span><code>mkdir -p ~/.claude/skills/minha-skill</code></span></div>
+        <div class="step"><div class="n">Passo 3</div><b>Escreva o SKILL.md</b><span>Descrição clara + instruções objetivas.</span></div>
+        <div class="step"><div class="n">Passo 4</div><b>Teste e refine</b><span>Teste automático e manual com <code>/minha-skill</code>.</span></div>
+      </div>
+      <div class="panel" style="margin-top:34px"><pre><code>mkdir -p ~/.claude/skills/summarize-changes
+nano ~/.claude/skills/summarize-changes/SKILL.md
+
+# depois, dentro de um projeto:
+claude
+/summarize-changes</code></pre></div>
+      <div class="source">Fonte: <a href="https://docs.anthropic.com/en/docs/claude-code/skills">Claude Code Docs — Create your first skill</a></div>
+      <aside class="notes">Dica: uma skill ruim geralmente falha na descrição. Se o Claude não chama sozinho, melhore o description e when_to_use.</aside>
+    </section>
+
+    <section class="slide">
+      <div class="eyebrow">Exemplo prático</div>
+      <h2>Skill para revisar mudanças antes do PR</h2>
+      <div class="grid2">
+        <pre><code><span class="kw">---</span>
+<span class="ok">name:</span> pr-review
+<span class="ok">description:</span> Revise alterações antes de abrir Pull Request, verificando riscos, testes e clareza da implementação.
+<span class="kw">---</span>
+
+<span class="kw">## Entrada</span>
+Leia o diff atual:
+!`git diff HEAD`
+
+<span class="kw">## Revise procurando</span>
+- Bug potencial
+- Falta de teste
+- Código duplicado
+- Logs sensíveis
+- Quebra de contrato/API
+
+<span class="kw">## Responda com</span>
+1. Resumo técnico
+2. Pontos de atenção
+3. Checklist antes do PR</code></pre>
+        <div class="panel soft">
+          <h3>Resultado esperado</h3>
+          <p>Em vez de pedir “revise meu código” toda vez, você usa:</p>
+          <pre style="margin-top:20px"><code>/pr-review</code></pre>
+          <p style="margin-top:20px">E a revisão já sai no padrão que você definiu.</p>
+        </div>
+      </div>
+      <aside class="notes">Esse slide ajuda a tornar tangível. Pode mostrar que a skill transforma um comportamento subjetivo em checklist explícito.</aside>
+    </section>
+
+    <section class="slide">
+      <div class="eyebrow">Distribuição</div>
+      <h2>Repositório de Skills globais</h2>
+      <div class="grid2">
+        <div>
+          <p class="statement">A ideia do repo é versionar Skills pessoais/globais e instalar tudo no diretório padrão da máquina.</p>
+          <div class="tags"><span class="tag">Compartilhável</span><span class="tag">Versionado</span><span class="tag">Instalação rápida</span></div>
+        </div>
+        <pre class="folder"><span class="dir">claude-code-skills/</span>
+├── <span class="file">install.sh</span>
+├── <span class="file">README.md</span>
+└── <span class="dir">skills/</span>
+    ├── <span class="dir">pr-review/</span>
+    │   └── <span class="req">SKILL.md</span>
+    ├── <span class="dir">create-issue/</span>
+    │   └── <span class="req">SKILL.md</span>
+    └── <span class="dir">doc-tech/</span>
+        └── <span class="req">SKILL.md</span></pre>
+      </div>
+      <aside class="notes">Transição para a prática: mostrar que o .sh automatiza a cópia para ~/.claude/skills e deixa fácil atualizar as skills.</aside>
+    </section>
+
+    <section class="slide">
+      <div class="eyebrow">install.sh</div>
+      <h2>O script instala no diretório global do Claude Code</h2>
+      <div class="grid2">
+        <pre><code>#!/usr/bin/env bash
+set -euo pipefail
+
+SKILLS_SOURCE="$(pwd)/skills"
+SKILLS_TARGET="$HOME/.claude/skills"
+
+mkdir -p "$SKILLS_TARGET"
+rsync -av "$SKILLS_SOURCE/" "$SKILLS_TARGET/"
+
+echo "Skills instaladas em: $SKILLS_TARGET"</code></pre>
+        <div class="panel soft">
+          <h3>Fluxo da demo</h3>
+          <div class="list">
+            <div class="item"><div class="icon">1</div><div><b>Clonar o repositório</b><span>Mostrar a estrutura: <code>skills/</code> + <code>install.sh</code>.</span></div></div>
+            <div class="item"><div class="icon">2</div><div><b>Executar a instalação</b><span><code>chmod +x install.sh && ./install.sh</code></span></div></div>
+            <div class="item"><div class="icon">3</div><div><b>Validar no Claude Code</b><span>Abrir <code>claude</code> e chamar uma Skill com <code>/nome</code>.</span></div></div>
+          </div>
+        </div>
+      </div>
+      <aside class="notes">Ajustar o script na apresentação conforme o repo real. O slide mostra um modelo didático, não precisa ser exatamente igual ao script do usuário.</aside>
+    </section>
+
+    <section class="slide">
+      <div class="eyebrow">Boas práticas</div>
+      <h2>Como escrever Skills que funcionam bem</h2>
+      <div class="grid2">
+        <div class="panel"><h3>Faça</h3><div class="list"><div class="item"><div class="icon">✓</div><div><b>Seja específico</b><span>Uma Skill por workflow.</span></div></div><div class="item"><div class="icon">✓</div><div><b>Defina a saída esperada</b><span>Formato, critérios e checklist.</span></div></div><div class="item"><div class="icon">✓</div><div><b>Inclua exemplos</b><span>Ajuda o Claude a acertar o padrão.</span></div></div></div></div>
+        <div class="panel"><h3>Evite</h3><div class="list"><div class="item"><div class="icon bad">!</div><div><b>Skill genérica demais</b><span>Ela vira um CLAUDE.md disfarçado.</span></div></div><div class="item"><div class="icon bad">!</div><div><b>Segredos no arquivo</b><span>Nada de token, senha ou credencial.</span></div></div><div class="item"><div class="icon bad">!</div><div><b>Script sem revisar</b><span>Sempre revisar skills baixadas de terceiros.</span></div></div></div></div>
+      </div>
+      <div class="source">Fonte: <a href="https://support.claude.com/en/articles/12512198-how-to-create-custom-skills">Claude Help Center — Custom Skills</a></div>
+      <aside class="notes">Encerrar a parte conceitual reforçando segurança: skill pode carregar scripts, então precisa ter cuidado com fontes externas.</aside>
+    </section>
+
+    <section class="slide">
+      <div class="hero">
+        <div class="eyebrow">Prática</div>
+        <h1>Agora vamos abrir o repositório</h1>
+        <p class="subtitle">Mostrar a estrutura das Skills globais, executar o <code>install.sh</code> e validar uma Skill rodando dentro do Claude Code.</p>
+        <div class="list" style="max-width:860px">
+          <div class="item"><div class="icon">→</div><div><b>1. Estrutura do repo</b><span><code>skills/&lt;nome&gt;/SKILL.md</code></span></div></div>
+          <div class="item"><div class="icon">→</div><div><b>2. Instalação na máquina</b><span><code>~/.claude/skills</code></span></div></div>
+          <div class="item"><div class="icon">→</div><div><b>3. Uso real</b><span>Invocar com <code>/nome-da-skill</code> e comparar o resultado.</span></div></div>
+        </div>
+      </div>
+      <aside class="notes">Slide de transição final para sair da apresentação e entrar na demonstração ao vivo.</aside>
+    </section>
+  </main>
+
+  <div class="controls">
+    <button class="btn" onclick="prevSlide()">←</button>
+    <span class="counter" id="counter">1 / 13</span>
+    <button class="btn" onclick="nextSlide()">→</button>
+    <button class="btn" onclick="toggleNotes()">Notas</button>
+    <button class="btn" onclick="window.print()">PDF</button>
+  </div>
+  <div class="progress" id="progress"></div>
+
+  <script>
+    const slides = [...document.querySelectorAll('.slide')];
+    let current = 0;
+    function render(){
+      slides.forEach((s,i)=>s.classList.toggle('active', i===current));
+      document.getElementById('counter').textContent = `${current+1} / ${slides.length}`;
+      document.getElementById('progress').style.width = `${((current+1)/slides.length)*100}%`;
+      location.hash = `slide-${current+1}`;
+    }
+    function nextSlide(){ current = Math.min(slides.length-1, current+1); render(); }
+    function prevSlide(){ current = Math.max(0, current-1); render(); }
+    function toggleNotes(){ document.body.classList.toggle('show-notes'); }
+    document.addEventListener('keydown', (e)=>{
+      if(['ArrowRight','PageDown',' '].includes(e.key)){ e.preventDefault(); nextSlide(); }
+      if(['ArrowLeft','PageUp'].includes(e.key)){ e.preventDefault(); prevSlide(); }
+      if(e.key.toLowerCase()==='n') toggleNotes();
+      if(e.key==='Home'){ current=0; render(); }
+      if(e.key==='End'){ current=slides.length-1; render(); }
+    });
+    const match = location.hash.match(/slide-(\d+)/);
+    if(match){ current = Math.min(slides.length-1, Math.max(0, Number(match[1])-1)); }
+    render();
+  </script>
+</body>
+</html>
